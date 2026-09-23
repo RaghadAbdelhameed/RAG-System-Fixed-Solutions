@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Super Admin - KnowledgeHub</title>
+<link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+  <div class="topbar">
+    <span class="brand">🏢 Super Admin</span>
+    <button onclick="logout()">Log out</button>
+  </div>
+  <div class="shell">
+    <div class="card">
+      <h2>Create a new organization</h2>
+      <label>Organization name</label>
+      <input type="text" id="orgName">
+      <div id="orgMsg" class="hint"></div>
+      <button class="primary" onclick="createOrg()">Create</button>
+    </div>
+
+    <div class="card">
+      <h2>Add an admin to an organization</h2>
+      <label>Organization</label>
+      <select id="orgSelect"></select>
+      <label>Admin name</label>
+      <input type="text" id="adminName">
+      <label>Email</label>
+      <input type="email" id="adminEmail">
+      <div id="adminMsg" class="hint"></div>
+      <button class="primary" onclick="createOrgAdmin()">Create &amp; send temporary password</button>
+    </div>
+
+    <div class="card">
+      <h2>Registered organizations</h2>
+      <table>
+        <thead><tr><th>Name</th><th>Status</th><th>Created</th></tr></thead>
+        <tbody id="orgsBody"></tbody>
+      </table>
+    </div>
+  </div>
+<script src="js/api.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

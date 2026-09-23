@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Dashboard - KnowledgeHub</title>
+<link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+<script>
+  // Only organization admins belong here.
+  (function () {
+    const role = localStorage.getItem("kh_role");
+    if (!localStorage.getItem("kh_token")) location.replace("login.html");
+    else if (role === "super_admin") location.replace("superadmin.html");
+    else if (role === "member") location.replace("chat.html");
+  })();
+</script>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="sb-brand">📚 KnowledgeHub</div>
+    <nav class="sb-nav">
+      <a href="#documents" data-target="documents">📁 Documents</a>
+      <a href="#chat" data-target="chat">💬 Chatbot</a>
+      <a href="#users" data-target="users">👥 Users</a>
+      <a href="#feedback" data-target="feedback">⭐ Feedback</a>
+    </nav>
+    <div class="sb-footer">
+      <div id="who"></div>
+      <button onclick="logout()">Log out</button>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- ===== Documents ===== -->
+    <section id="sec-documents" class="panel">
+      <h1 class="page-title">Documents</h1>
+      <div class="card">
+        <h2>Upload a new document</h2>
+        <label>File (PDF / DOCX / TXT / CSV)</label>
+        <input type="file" id="file">
+        <label>Tag (optional)</label>
+        <input type="text" id="tag" placeholder="e.g. policies, insurance, technical">
+        <div id="uploadMsg" class="hint"></div>
+        <button class="primary" onclick="uploadDoc()">Upload &amp; index</button>
+      </div>
+      <div class="card">
+        <h2>Current documents</h2>
+        <table>
+          <thead><tr><th>Name</th><th>Type</th><th>Tag</th><th>Uploaded</th><th></th></tr></thead>
+          <tbody id="docsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== Chatbot ===== -->
+    <section id="sec-chat" class="panel">
+      <h1 class="page-title">Chatbot</h1>
+      <div class="card chat-shell">
+        <div class="chat-head">
+          <h2>Ask your knowledge base</h2>
+          <button class="secondary" onclick="newChat()">＋ New conversation</button>
+        </div>
+        <div id="log" class="chat-log"></div>
+        <div class="composer">
+          <input type="text" id="question" dir="auto" placeholder="Type your question (English or Arabic)...">
+          <button class="mic" id="micBtn" title="Ask by voice">🎤</button>
+          <button class="primary" onclick="sendQuestion()">Send</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Users ===== -->
+    <section id="sec-users" class="panel">
+      <h1 class="page-title">Users</h1>
+      <div class="card">
+        <h2>Add a new user</h2>
+        <label>Full name</label>
+        <input type="text" id="fullName">
+        <label>Email</label>
+        <input type="email" id="email">
+        <div id="createMsg" class="hint"></div>
+        <button class="primary" onclick="createUser()">Create account &amp; send temporary password</button>
+      </div>
+      <div class="card">
+        <h2>Current users</h2>
+        <table>
+          <thead><tr><th>Name</th><th>Email</th><th>Status</th></tr></thead>
+          <tbody id="usersBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== Feedback ===== -->
+    <section id="sec-feedback" class="panel">
+      <h1 class="page-title">Feedback</h1>
+      <div class="card">
+        <h2>Overview</h2>
+        <p id="statsBox" class="hint">Loading...</p>
+      </div>
+      <div class="card">
+        <h2>Ratings log</h2>
+        <table>
+          <thead><tr><th>Rating</th><th>Comment</th><th>Status</th><th></th></tr></thead>
+          <tbody id="feedbackBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/chat.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
